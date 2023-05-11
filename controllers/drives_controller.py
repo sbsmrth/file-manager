@@ -17,11 +17,11 @@ def find_valid_drives(drives, valid_drives):
 
     # insert_drives(valid_drives)
 
-def open_drive(table, valid_drives, browse_dir):
+def open_drive(table, main_table, valid_drives, browse_dir):
     index = int(table.selection()[0])
     path = valid_drives[index]
 
-    insert_folders(path, table, browse_dir)
+    insert_folders(path, main_table, browse_dir)
 
 def insert_folders(path, table, browse_dir):
     for i in table.get_children():
