@@ -1,1 +1,4 @@
-print("init")
+from gui.gui_app import FileExplorer
+
+explorer = FileExplorer()
+explorer.run()
