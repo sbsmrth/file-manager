@@ -9,14 +9,11 @@ def insert_drives(table, valid_drives):
         table.insert(parent='', iid=r, text='', values = [valid_drives[r]], 
                      index='end')
 
-def find_valid_drives(drives):
-    valid_drives = []
+def find_valid_drives(drives, valid_drives):
     
     for drive in drives:
         if os.path.exists(drive):
             valid_drives.append(drive)
-
-    return valid_drives
 
     # insert_drives(valid_drives)
 
