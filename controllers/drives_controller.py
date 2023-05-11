@@ -1,4 +1,5 @@
 import os
+from folders_controller import insert_folders
 
 def insert_drives(table, valid_drives):
 
@@ -22,15 +23,3 @@ def open_drive(table, main_table, valid_drives, browse_dir):
     path = valid_drives[index]
 
     insert_folders(path, main_table, browse_dir)
-
-def insert_folders(path, table, browse_dir):
-    for i in table.get_children():
-        table.delete(i)
-
-    folders = os.listdir(path)
-
-    browse_dir = []
-
-    for r in range(len(folders)):
-        table.insert(parent='', iid=r, text='', values=[folders[r]], index='end')
-        browse_dir.append(f"{str(path)}/{folders[r]}")
