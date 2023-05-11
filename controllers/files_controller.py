@@ -6,7 +6,7 @@ def insert_files(table, path, browse_dir):
 
     files = os.listdir(path)
 
-    browse_dir = []
+    browse_dir.clear()
 
     for r in range(len(files)):
         table.insert(parent='', iid=r, text='', index='end', values=[files[r]])
