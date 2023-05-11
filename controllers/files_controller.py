@@ -1,13 +1,16 @@
 import os
 
-def insert_files(table, path, browse_dir):
-    for i in table.get_children():
-        table.delete(i)
+class FilesController:
 
-    files = os.listdir(path)
+    @staticmethod
+    def insert_files(table, path, browse_dir):
+        for i in table.get_children():
+            table.delete(i)
 
-    browse_dir.clear()
+        files = os.listdir(path)
 
-    for r in range(len(files)):
-        table.insert(parent='', iid=r, text='', index='end', values=[files[r]])
-        browse_dir.append(f"{str(path)}/{files[r]}")
+        browse_dir.clear()
+
+        for r in range(len(files)):
+            table.insert(parent='', iid=r, text='', index='end', values=[files[r]])
+            browse_dir.append(f"{str(path)}/{files[r]}")

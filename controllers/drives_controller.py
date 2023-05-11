@@ -1,29 +1,34 @@
 import os
-from .folders_controller import insert_folders
+from .folders_controller import FoldersController
 
-def insert_drives(table, valid_drives):
-
-    for i in table.get_children():
-        table.delete(i)
-
-    for r in range(len(valid_drives)):
-        table.insert(parent='', iid=r, text='', values = [valid_drives[r]], 
-                     index='end')
-
-def find_valid_drives(drives, valid_drives):
+class DrivesController:
     
-    for drive in drives:
-        if os.path.exists(drive):
-            valid_drives.append(drive)
+    @staticmethod
+    def insert_drives(table, valid_drives):
 
-def open_drive(window, table, main_table, valid_drives, browse_dir):
+        for i in table.get_children():
+            table.delete(i)
 
-    if not table.selection():
-        return
+        for r in range(len(valid_drives)):
+            table.insert(parent='', iid=r, text='', values = [valid_drives[r]], 
+                        index='end')
 
-    index = int(table.selection()[0])
-    path = valid_drives[index]
+    @staticmethod
+    def find_valid_drives(drives, valid_drives):
+    
+        for drive in drives:
+            if os.path.exists(drive):
+                valid_drives.append(drive)
 
-    insert_folders(path, main_table, browse_dir)
+    @staticmethod
+    def open_drive(window, table, main_table, valid_drives, browse_dir):
 
-    window.title(path)
+        if not table.selection():
+            return
+
+        index = int(table.selection()[0])
+        path = valid_drives[index]
+
+        FoldersController.insert_folders(path, main_table, browse_dir)
+
+        window.title(path)

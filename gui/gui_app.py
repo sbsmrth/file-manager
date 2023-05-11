@@ -1,7 +1,7 @@
 import tkinter as tk
 import tkinter.ttk as ttk
-from controllers.drives_controller import *
-from controllers.folders_controller import *
+from controllers.drives_controller import DrivesController
+from controllers.folders_controller import FoldersController
 
 class FileExplorer():
 
@@ -35,7 +35,7 @@ class FileExplorer():
         self.side_table.heading('Drives', text='Drives', anchor=tk.W)
 
         self.side_table.pack(side=tk.LEFT, anchor=tk.W, fill=tk.Y)
-        self.side_table.bind('<<TreeviewSelect>>', lambda e: open_drive(self.window, self.side_table, self.main_table, self.valid_drives, self.browse_dir))
+        self.side_table.bind('<<TreeviewSelect>>', lambda e: DrivesController.open_drive(self.window, self.side_table, self.main_table, self.valid_drives, self.browse_dir))
 
         self.main_table = ttk.Treeview(self.window)
 
@@ -45,10 +45,10 @@ class FileExplorer():
         self.main_table.heading('Files', text='File', anchor=tk.W)
 
         self.main_table.pack(side=tk.LEFT, anchor=tk.W, fill=tk.Y)
-        self.main_table.bind('<<TreeviewSelect>>', lambda e: open_folder(self.window, self.main_table, self.browse_dir) )
-        find_valid_drives(self.drives, self.valid_drives)
+        self.main_table.bind('<<TreeviewSelect>>', lambda e: FoldersController.open_folder(self.window, self.main_table, self.browse_dir) )
+        DrivesController.find_valid_drives(self.drives, self.valid_drives)
 
-        insert_drives(self.side_table, self.valid_drives)
+        DrivesController.insert_drives(self.side_table, self.valid_drives)
 
     def run(self):
         self.window.mainloop()
