@@ -1,6 +1,6 @@
 import tkinter as tk
 import tkinter.ttk as ttk
-from controllers import drives_controller
+from controllers.drives_controller import *
 
 
 window = tk.Tk()
@@ -46,7 +46,7 @@ side_table.heading('Drives', text='Drives', anchor=tk.W)
 
 side_table.pack(side=tk.LEFT, anchor=tk.W, fill=tk.Y)
 #side_table.bind('<<TreeviewSelect>>' lambda e:open_drive())
-side_table.bind('<<TreeviewSelect>>', lambda e: drives_controller.open_drive())
+side_table.bind('<<TreeviewSelect>>', lambda e: open_drive(side_table, valid_drives, browse_dir))
 
 main_table = ttk.Treeview(window)
 
@@ -59,5 +59,8 @@ main_table.pack(side=tk.LEFT, anchor=tk.W, fill=tk.Y)
 #main_table.bind('<<TreeviewSelect>>', lambda e:open_folder() )
 main_table.bind('<<TreeviewSelect>>', )
 #llamada del metodo find_valid_drives ()
+find_valid_drives(drives, valid_drives)
+
+insert_drives(side_table, valid_drives)
 
 window.mainloop()
