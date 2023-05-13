@@ -27,6 +27,10 @@ class FileExplorer():
         self.valid_drives = []
         self.browse_dir = []
 
+        self.context_menu = tk.Menu(self.window, tearoff=False)
+        self.context_menu.add_command(label='Rename file')
+        self.context_menu.add_command(label='Delete File')
+
         self.side_table = ttk.Treeview(self.window)
 
         self.side_table['column'] = ['Drives']
@@ -35,7 +39,7 @@ class FileExplorer():
         self.side_table.heading('Drives', text='Drives', anchor=tk.W)
 
         self.side_table.pack(side=tk.LEFT, anchor=tk.W, fill=tk.Y)
-        self.side_table.bind('<<TreeviewSelect>>', lambda e: DrivesController.open_drive(self.window, self.side_table, self.main_table, self.valid_drives, self.browse_dir))
+        self.side_table.bind('<<TreeviewSelect>>', lambda e: DrivesController.open_drive(self.window, self.side_table, self.main_table, self.valid_drives, self.browse_dir, self.context_menu))
 
         self.main_table = ttk.Treeview(self.window)
 
