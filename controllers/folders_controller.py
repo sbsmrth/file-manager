@@ -1,12 +1,12 @@
 import os
 from .files_controller import FilesController
-
+from .context_menu_controller import MenuController
 class FoldersController:
 
     @staticmethod
-    def insert_folders(path, table, browse_dir):
-        for i in table.get_children():
-            table.delete(i)
+    def insert_folders(path, table, browse_dir, menu):
+        for item in table.get_children():
+            table.delete(item)
 
         folders = os.listdir(path)
 
@@ -15,6 +15,10 @@ class FoldersController:
         for r in range(len(folders)):
             table.insert(parent='', iid=r, text='', values=[folders[r]], index='end')
             browse_dir.append(f"{str(path)}/{folders[r]}")
+
+        for item in table.get_children():
+            table.item(item, tags=item)
+            table.tag_bind(item, '<Button-3>', lambda e: MenuController.open(e, menu, table, path))
 
     @staticmethod
     def open_folder(window, table, browse_dir):
