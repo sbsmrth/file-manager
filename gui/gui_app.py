@@ -3,6 +3,8 @@ import tkinter.ttk as ttk
 import ttkbootstrap as ttkb
 from controllers.drives_controller import DrivesController
 from controllers.folders_controller import FoldersController
+from controllers.utils_controller import FilesController
+from controllers.context_menu_controller import MenuController
 
 class FileExplorer():
 
@@ -32,8 +34,8 @@ class FileExplorer():
         self.browse_dir = []
 
         self.context_menu = tk.Menu(self.window, tearoff=False)
-        self.context_menu.add_command(label='Rename file')
-        self.context_menu.add_command(label='Delete File')
+        self.context_menu.add_command(label='Rename file', command= lambda: FilesController.rename_file( MenuController.route, self.main_table, MenuController.id))
+        self.context_menu.add_command(label='Delete File', command= lambda: FilesController.remove_file( MenuController.route, self.main_table, MenuController.id))
 
         self.side_table = ttk.Treeview(self.window)
 
