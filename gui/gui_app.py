@@ -1,18 +1,22 @@
 import tkinter as tk
 import tkinter.ttk as ttk
+import ttkbootstrap as ttkb
 from controllers.drives_controller import DrivesController
 from controllers.folders_controller import FoldersController
 
 class FileExplorer():
 
     def __init__(self) :
-        self.window = tk.Tk()
-        self.window.geometry('600x600')
+        self.window = ttkb.Window(themename='darkly')
+        self.window.attributes('-fullscreen', True)
 
         self.window.title('File Explorer')
-
         self.style = ttk.Style(self.window)
         self.style.configure('Treeview', font=('Bold',13))
+
+        self.user_win_width = self.window.winfo_screenwidth()
+        self.left_table_width = int(self.user_win_width * 0.2)
+        self.main_table_width = int(self.user_win_width * 0.8)
 
         self.drives = ['A://', 'B://', 'C://',
                 'D://', 'E://', 'F://',
@@ -35,7 +39,7 @@ class FileExplorer():
 
         self.side_table['column'] = ['Drives']
         self.side_table.column('#0', anchor=tk.W, width=0, stretch=tk.NO)
-        self.side_table.column('Drives', anchor=tk.W,  width=120)
+        self.side_table.column('Drives', anchor=tk.W,  width=self.left_table_width)
         self.side_table.heading('Drives', text='Drives', anchor=tk.W)
 
         self.side_table.pack(side=tk.LEFT, anchor=tk.W, fill=tk.Y)
@@ -45,7 +49,7 @@ class FileExplorer():
 
         self.main_table['column'] = ['Files']
         self.main_table.column('#0',  anchor=tk.W, width=0, stretch=tk.NO)
-        self.main_table.column('Files', anchor=tk.W, width=500)
+        self.main_table.column('Files', anchor=tk.W, width=self.main_table_width)
         self.main_table.heading('Files', text='File', anchor=tk.W)
 
         self.main_table.pack(side=tk.LEFT, anchor=tk.W, fill=tk.Y)
