@@ -10,21 +10,22 @@ class FoldersController:
         for item in table.get_children():
             table.delete(item)
 
-        path_value = path['text']
-        folders = os.listdir(path_value)
+        path['text'] = 'C://'
+        new_path = path['text']
 
-        node = tree.find_node(path_value)
+
+        folders = os.listdir(new_path)
+
+        node = tree.find_node(new_path)
         if len(node.children) == 0:
             for file in folders:
-                tree.add_node(f"{path_value}{file}", path_value)
-        else:
-            path['text'] = 'C://'
+                tree.add_node(f"{new_path}{file}", new_path)
 
         node_children = node.children
 
         for r in range(len(node_children)):
             name = os.path.basename(node_children[r].data)
-            table.insert(parent='', iid=r, text='', values=[name], index='end')
+            table.insert(parent='', text='', values=[name], index='end')
 
     @staticmethod
     def open_folder(table, tree, menu, path):

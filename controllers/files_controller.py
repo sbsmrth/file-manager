@@ -24,7 +24,7 @@ class FilesController:
 
         for r in range(len(children)):
             name = os.path.basename(children[r].data)             
-            table.insert(parent='', iid=r, text='', index='end', values=[name])
+            table.insert(parent='', text='', index='end', values=[name])
 
         for item in table.get_children():
             table.item(item, tags=item)

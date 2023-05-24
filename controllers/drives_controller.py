@@ -10,7 +10,7 @@ class DrivesController:
             table.delete(i)
 
         for r in range(len(valid_drives)):
-            table.insert(parent='', iid=r, text='', values = [valid_drives[r]], 
+            table.insert(parent='', text='', values = [valid_drives[r]], 
                         index='end')
 
     @staticmethod
@@ -21,9 +21,9 @@ class DrivesController:
                 valid_drives.append(drive)
 
     @staticmethod
-    def open_drive(last_path, table, main_table, tree):
+    def open_drive(base_path, table, main_table, tree):
 
         if not table.selection():
             return
 
-        FoldersController.insert_folders(last_path, main_table, tree)
+        FoldersController.insert_folders(base_path, main_table, tree)
