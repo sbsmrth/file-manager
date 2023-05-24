@@ -1,10 +1,10 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 import ttkbootstrap as ttkb
-from controllers.drives_controller import DrivesController
-from controllers.folders_controller import FoldersController
-from controllers.files_controller import FilesController
-from controllers.context_menu_controller import MenuController
+from src.controllers.drives_controller import DrivesController
+from src.controllers.folders_controller import FoldersController
+from src.controllers.files_controller import FilesController
+from src.controllers.context_menu_controller import MenuController
 from src.nary_tree import NaryTree
 from src.nary_tree_node import NaryTreeNode
 
@@ -46,8 +46,8 @@ class FileExplorer():
         
         self.top_utils_menu = ttkb.Menu()
         self.down_utils_menu = ttkb.Menu(self.top_utils_menu, tearoff=False)
-        self.utils_folder_icon = tk.PhotoImage(file="./assets/folder.png")
-        self.utils_file_icon = tk.PhotoImage(file="./assets/file.png")
+        self.utils_folder_icon = tk.PhotoImage(file="./src/assets/folder.png")
+        self.utils_file_icon = tk.PhotoImage(file="./src/assets/file.png")
         self.down_utils_menu.add_command(label="Folder", accelerator="Ctrl+N", command=lambda: FoldersController.create_folder(self.main_table, self.last_path, self.tree), image=self.utils_folder_icon,
                                          compound=tk.LEFT)
         self.down_utils_menu.add_command(label="File", command=lambda: FilesController.create_file(self.last_path, self.tree, self.main_table), image=self.utils_file_icon,

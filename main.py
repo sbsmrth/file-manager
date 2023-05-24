@@ -1,4 +1,4 @@
-from gui.gui_app import FileExplorer
+from src.gui.gui_app import FileExplorer
 
 explorer = FileExplorer()
 explorer.run()
