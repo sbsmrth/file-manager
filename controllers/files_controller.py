@@ -1,16 +1,49 @@
 import os
-
+from .context_menu_controller import MenuController
+from tkinter.simpledialog import askstring
 class FilesController:
 
     @staticmethod
-    def insert_files(table, path, browse_dir):
+    def insert_files(table, path, tree, menu):
+
+        # selection = table.selection()
+        # item = selection[0]  # Obtener el elemento seleccionado
+        # row_text = table.item(item)['values'][0]  # Obtener el texto de la fila seleccionada
+
         for i in table.get_children():
             table.delete(i)
 
-        files = os.listdir(path)
+        current_route = path['text']
 
-        browse_dir.clear()
+        files = os.listdir(current_route)
+        children = tree.find_node(current_route).children
 
-        for r in range(len(files)):
-            table.insert(parent='', iid=r, text='', index='end', values=[files[r]])
-            browse_dir.append(f"{str(path)}/{files[r]}")
+        if len(children) == 0:
+            for file in files:
+                tree.add_node(f"{current_route}/{file}", current_route)
+
+        for r in range(len(children)):
+            name = os.path.basename(children[r].data)             
+            table.insert(parent='', iid=r, text='', index='end', values=[name])
+
+        for item in table.get_children():
+            table.item(item, tags=item)
+            table.tag_bind(item, '<Button-3>', lambda e: MenuController.open(e, menu, table, current_route))
+
+    @staticmethod
+    def create_file (path, tree, table):
+        new_name = askstring("Name", "Enter new name:")
+        full_path = ''
+        if new_name: 
+            try:
+                if path['text'] == 'C://':
+                    full_path = f"{path['text']}{new_name}.txt"
+                else:
+                    full_path = f"{path['text']}/{new_name}.txt"
+
+                with open(full_path, 'w') as archivo:
+                    pass  
+                table.insert(parent='', text='', index='end', values=[new_name + ".txt"])
+                tree.add_node(full_path, path['text'])
+            except IOError:
+                print(f"No se pudo crear el archivo en la ruta: {full_path}")

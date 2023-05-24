@@ -21,14 +21,9 @@ class DrivesController:
                 valid_drives.append(drive)
 
     @staticmethod
-    def open_drive(window, table, main_table, valid_drives, browse_dir, menu):
+    def open_drive(last_path, table, main_table, tree):
 
         if not table.selection():
             return
 
-        index = int(table.selection()[0])
-        path = valid_drives[index]
-
-        FoldersController.insert_folders(path, main_table, browse_dir, menu)
-
-        window.title(path)
+        FoldersController.insert_folders(last_path, main_table, tree)

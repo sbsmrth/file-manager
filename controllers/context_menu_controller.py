@@ -8,5 +8,5 @@ class MenuController:
         menu.tk_popup(event.x_root, event.y_root)
         cls.id = table.identify_row(event.y)
         item_text = table.item(cls.id)['values'][0]  
-        item_route = f"{path}{item_text}"
+        item_route = f"{path}/{item_text}"
         cls.route = item_route
