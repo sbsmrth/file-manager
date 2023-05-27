@@ -63,4 +63,4 @@ class FoldersController:
             except FileExistsError:
                 print("The folder already exists.")
             except OSError as e:
-                print(f"Se produjo un error al crear la carpeta: {e}")
+                print(f"The folder can't be created: {e}")

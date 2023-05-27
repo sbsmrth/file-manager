@@ -5,11 +5,6 @@ class FilesController:
 
     @staticmethod
     def insert_files(table, path, tree, menu):
-
-        # selection = table.selection()
-        # item = selection[0]  # Obtener el elemento seleccionado
-        # row_text = table.item(item)['values'][0]  # Obtener el texto de la fila seleccionada
-
         for i in table.get_children():
             table.delete(i)
 

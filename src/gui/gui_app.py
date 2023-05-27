@@ -5,6 +5,7 @@ from src.controllers.drives_controller import DrivesController
 from src.controllers.folders_controller import FoldersController
 from src.controllers.files_controller import FilesController
 from src.controllers.context_menu_controller import MenuController
+from src.controllers.utils_controller import UtilsController
 from src.nary_tree import NaryTree
 from src.nary_tree_node import NaryTreeNode
 
@@ -39,10 +40,10 @@ class FileExplorer():
         self.browse_dir = [self.tree.root.data]
 
         self.context_menu = tk.Menu(self.window, tearoff=False)
-        self.context_menu.add_command(label='Rename', command= lambda: self.tree.rename_node(MenuController.route, self.main_table, MenuController.id))
-        self.context_menu.add_command(label='Delete', command= lambda: self.tree.remove_node(MenuController.route, self.main_table, MenuController.id))
-        self.context_menu.add_command(label='copy', command= lambda: self.tree.copy_and_paste(MenuController.route, self.main_table))
-        self.context_menu.add_command(label='Move', command= lambda: self.tree.move(MenuController.route, self.main_table, MenuController.id))
+        self.context_menu.add_command(label='Rename', command= lambda: UtilsController.rename(MenuController.route, self.main_table, MenuController.id, self.tree))
+        self.context_menu.add_command(label='Delete', command= lambda: UtilsController.remove(MenuController.route, self.main_table, MenuController.id, self.tree))
+        self.context_menu.add_command(label='copy', command= lambda: UtilsController.copy_and_paste(MenuController.route, self.tree))
+        self.context_menu.add_command(label='Move', command= lambda: UtilsController.move(MenuController.route, self.main_table, MenuController.id, self.tree))
         
         self.top_utils_menu = ttkb.Menu()
         self.down_utils_menu = ttkb.Menu(self.top_utils_menu, tearoff=False)
