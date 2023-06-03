@@ -49,7 +49,7 @@ class FilesController:
             table.tag_bind(item, '<Button-3>', lambda e: MenuController.open(e, menu, table, current_route))
 
     @staticmethod
-    def create_file (path, tree, table):
+    def create_file (path, tree, table, menu):
         """
             Metodo estatico que permite crear archivos
 
@@ -62,32 +62,37 @@ class FilesController:
             table: tkinter.ttk.Treeview
                 la tabla Treeview que muestra los elementos el sistema
             
-            Raise
-            -----------
         """
-        
-          # Solicitar al usuario el nombre del nuevo archivo
+        # Solicitar al usuario el nombre del nuevo archivo
         new_name = askstring("Name", "Enter new name:")
+        raw_name, ext = os.path.splitext(new_name) #extrae el nombre del archivo y su extension
+
+        if not ext: #sino no hay una extension
+            ext = '.txt'
+
         # Inicializar la variable full_path
         full_path = ''
 
         # Verificar si se ha ingresado un nombre válido
-        if new_name: 
+        if new_name : 
             try:
-                 # Construir la ruta completa del nuevo archivo
+                 # Construir la ruta completa del nuevo archivo con la extension
                  if path['text'] == 'C://':
-                     full_path = f"{path['text']}{new_name}.txt"
+                     full_path = f"{path['text']}{raw_name}{ext}"
                  else:
-                     full_path = f"{path['text']}/{new_name}.txt"
+                     full_path = f"{path['text']}/{raw_name}{ext}"
 
                  # Crear el archivo vacío en la ruta completa
                  with open(full_path, 'w') as archivo:
                      pass  
 
                  # Insertar el nombre del nuevo archivo en la tabla
-                 table.insert(parent='', text='', index='end', values=[new_name + ".txt"])
+                 row = table.insert(parent='', text='', index='end', values=[raw_name + ext])
+                 table.item(row, tags=row)
+                 table.tag_bind(row, '<Button-3>', lambda e: MenuController.open(e, menu, table, path['text']))
 
                  # Agregar el nuevo nodo al árbol
                  tree.add_node(full_path, path['text'])
+                
             except IOError:
                 messagebox.showerror("Error", f"No se pudo crear el archivo en la ruta: {full_path}")

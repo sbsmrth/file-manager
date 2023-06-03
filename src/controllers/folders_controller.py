@@ -1,5 +1,6 @@
 import os
 from .files_controller import FilesController
+from src.controllers.context_menu_controller import MenuController
 from tkinter.simpledialog import askstring
 from tkinter import messagebox
 
@@ -81,7 +82,7 @@ class FoldersController:
             path['text'] = os.path.dirname(path['text'])
 
     @staticmethod
-    def create_folder (table, path, tree):
+    def create_folder (table, path, tree, menu):
         """
         Permite crear carpetas.
 
@@ -115,7 +116,9 @@ class FoldersController:
                     os.mkdir(full_path)
 
                 # Insertar el nombre de la nueva carpeta en la tabla
-                table.insert(parent='', text='', index='end', values=[new_name])
+                row = table.insert(parent='', text='', index='end', values=[new_name])
+                table.item(row, tags=row)
+                table.tag_bind(row, '<Button-3>', lambda e: MenuController.open(e, menu, table, path['text']))
                 # Agregar el nuevo nodo al árbol
                 tree.add_node(full_path, path['text'])
             except FileExistsError:

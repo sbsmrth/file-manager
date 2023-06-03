@@ -65,9 +65,9 @@ class FileExplorer():
         self.down_utils_menu = ttkb.Menu(self.top_utils_menu, tearoff=False)  # Crea un submenú dentro del menú superior
         self.utils_folder_icon = tk.PhotoImage(file="./src/assets/folder.png")  # Carga una imagen para el icono de carpeta.
         self.utils_file_icon = tk.PhotoImage(file="./src/assets/file.png")  # Carga una imagen para el icono de archivo.
-        self.down_utils_menu.add_command(label="Folder", accelerator="Ctrl+N", command=lambda: FoldersController.create_folder(self.main_table, self.last_path, self.tree), image=self.utils_folder_icon,
+        self.down_utils_menu.add_command(label="Folder", accelerator="Ctrl+N", command=lambda: FoldersController.create_folder(self.main_table, self.last_path, self.tree, self.context_menu), image=self.utils_folder_icon,
                                          compound=tk.LEFT)  # Agrega un comando al submenú con la etiqueta 'Folder', llama a la función create_folder() y muestra el icono de carpeta junto al texto del comando.
-        self.down_utils_menu.add_command(label="File", command=lambda: FilesController.create_file(self.last_path, self.tree, self.main_table), image=self.utils_file_icon,
+        self.down_utils_menu.add_command(label="File", command=lambda: FilesController.create_file(self.last_path, self.tree, self.main_table, self.context_menu), image=self.utils_file_icon,
                                          compound=tk.LEFT)  # Agrega un comando al submenú con la etiqueta 'File', llama a la función create_file() y muestra el icono de archivo junto al texto del comando.
         self.window.bind_all("<Control-n>", lambda: FoldersController.create_folder(self.main_table, self.last_path, self.tree))  # Asocia la combinación de teclas Ctrl+N a la función create_folder().
         self.down_utils_menu.add_separator()  # Agrega un separador en el submenú.
@@ -104,3 +104,5 @@ class FileExplorer():
             Ejecuta el explorador de archivos, es decir que inicia la aplicacion y muestra la ventana principal
         """
         self.window.mainloop()
+
+    

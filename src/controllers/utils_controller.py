@@ -24,9 +24,11 @@ class UtilsController:
             El árbol utilizado para organizar los elementos del sistema.
         
          Raises
-            ------------
+        ------------
         FileExistsError:
-        Se genera si la carpeta que se intenta crear ya existe en el sistema.   
+        Se genera si la carpeta que se intenta crear ya existe en el sistema.
+        OSError:
+        Se genera si ocurre un error al intentar crear la carpeta, como permisos insuficientes o una ruta inválida.  
         """
         new_name = askstring("Rename", "Enter new name:")#cuadro de dialogo para ingresar el nombre del archivo o carpeta
         node = tree.find_node(path) #buscar si el archivo o carpeta que se quiere renombrar se encuentra en el arbol
@@ -47,7 +49,9 @@ class UtilsController:
                     table.item(id, text=new_name, values=[new_name])
                     tree.rename_node(path, new_path)
             except FileExistsError:
-                    messagebox.showerror("Error", "The folder/file already exists.")
+                messagebox.showerror("error", "The folder/Files already exists.")
+            except OSError as e:
+                messagebox.showerror("error", f"The folder/Files can't be created: {e}")
 
  
     @staticmethod
@@ -68,7 +72,10 @@ class UtilsController:
 
         Error    
         ------------
-            En caso de que el la ruta path en el arbol no se encuentre.
+        FileExistsError:
+        Se genera si la carpeta que se intenta crear ya existe en el sistema.
+        OSError:
+        Se genera si ocurre un error al intentar crear la carpeta, como permisos insuficientes o una ruta inválida.
         """
         node_find = tree.find_node(path) #busca si path existe en el arbol
 
@@ -109,6 +116,11 @@ class UtilsController:
         path_finally = p_final or filedialog.askdirectory(title="Select destination folder") #permite seleccionar una ruta de destino donde se realizará la copia o pegado.
 
         if path_finally: #si tiene un valor valido
+            
+            if os.path.basename(path) in os.listdir(path_finally):
+                messagebox.showerror("error", "The element already exists.")
+                return
+
             try:
                 if os.path.isfile(path): #verifica si es un archivo
                     shutil.copy(path, path_finally) #copia el archivo ubicado en path a la ruta de destino path_finally
@@ -117,8 +129,10 @@ class UtilsController:
                     finally_route =  os.path.join(path_finally, os.path.basename(path)) #combina la ruta de destino con el nombre base de la carpeta
                     shutil.copytree(path, finally_route) 
                     tree.add_node(path, finally_route)
-            except Exception as e:
-                messagebox.showerror("Error:", str(e))
+            except FileExistsError:
+                messagebox.showerror("error", "The folder already exists.")
+            except OSError as e:
+                messagebox.showerror("error", f"The folder can't be created: {e}")
 
     @staticmethod
     def move(path, table, id, tree):
@@ -145,6 +159,9 @@ class UtilsController:
 
         # Verificar si se seleccionó una carpeta de destino
         if path_finally:
+            if os.path.basename(path) in os.listdir(path_finally):
+                messagebox.showerror("error", "The element already exists.")
+                return
             try:
                 if os.path.isfile(path):
                     # Mover un archivo a la carpeta de destino
@@ -160,6 +177,5 @@ class UtilsController:
                 # Eliminar el nodo y el elemento de la tabla correspondientes al archivo o carpeta movido
                 tree.remove_node(path)
                 table.delete(id) #elimina el elemento de la tabla
-            except Exception as e:
-                # Mostrar mensaje de error en caso de excepción
-                messagebox.showerror("Error:", str(e))
+            except OSError as e:
+                messagebox.showerror("error", f"The element can't be created: {e}")

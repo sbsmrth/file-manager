@@ -30,7 +30,7 @@ class NaryTree:
             -----------
             data: str
                valor del nodo que se quiere buscar
-            current_node: nodo
+            current_node: NaryTreeNode
                 valor del nodo, desde donde se quiere iniciar la busqueda
 
             returns
@@ -43,7 +43,7 @@ class NaryTree:
         if current_node.data == data:  # Si el valor del nodo actual coincide con el valor buscado...
             nodes.append(current_node)  # Agregar el nodo actual a la lista de nodos encontrados.
 
-        for child in current_node.children:  # Para cada hijo del nodo actual...
+        for child in current_node.children:  # Para cada hijo del nodo actual.
             nodes += self._find_node(data, child)  # Realizar una búsqueda recursiva llamando al método _find_node con el hijo como nuevo nodo actual y agregar los nodos encontrados a la lista.
 
         return nodes  # Retornar la lista de nodos encontrados.
@@ -79,8 +79,6 @@ class NaryTree:
             new_Data : str
                 corresponde al nuevo nombre del nodo.
         """
-        print(data)
-        print(new_data)
         node_find = self.find_node(data)        
         node_find.data = new_data
 
